@@ -58,10 +58,15 @@ python test.py --opt nearestx2 --load ./files/model_near512.pth \
 --output path/to/save/results \
 ```
 
-To use the ajusted model in the Web APP:
+By default, the Web APP selects from the two models based on the image size. The adjusted model will be used if the short side >= 512. To mannualy specify the model used in the Web APP:
 ```
 cd app
 python hello.py --opt nearestx2 --load ./files/model_near512.pth
+```
+or
+```
+cd app
+python hello.py --opt convnet --load ./files/model_256.pth
 ```
 
 ### Auxiliary network
