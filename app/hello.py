@@ -103,7 +103,7 @@ def hello_seq(name=None):
                 image.save(os.path.join(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
                 return render_template('hello.html', name=name, image_name=filename, image_width=W, image_height=H)
             else:
-                filename='example.png'
+                filename='example.jpg'
                 image = Image.open(os.path.join(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
                 W, H = image.size
                 return render_template('hello.html', name=name, image_name=filename, image_width=W, image_height=H, is_alert=True)
