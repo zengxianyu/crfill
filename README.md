@@ -10,6 +10,10 @@ or manually install these packages in a Python 3.6 enviroment:
 
 ```pytorch=1.3.1```, ```opencv=3.4.2```, ```tqdm```
 
+To use the web app, these additional packages should be installed: 
+
+```flask```, ```requests```, ```pillow```
+
 2. Use the code:
 
 with GPU:
