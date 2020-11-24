@@ -8,9 +8,9 @@ import networks
 
 
 parser = argparse.ArgumentParser(description='test script')
-parser.add_argument('--image', default='./examples/images', type=str)
-parser.add_argument('--mask', default='./examples/masks', type=str)
-parser.add_argument('--output', default='./examples/results', type=str)
+parser.add_argument('--image', default='./examples/places/images', type=str)
+parser.add_argument('--mask', default='./examples/places/masks', type=str)
+parser.add_argument('--output', default='./results', type=str)
 parser.add_argument('--nogpu', action='store_true')
 parser.add_argument('--opt', default='convnet', type=str)
 parser.add_argument('--load', default='./files/model_256.pth', type=str)
