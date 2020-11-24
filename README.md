@@ -1,13 +1,6 @@
 # crfill
 code for paper ``Image Inpainting with Contextual Reconstruction Loss"
 
-
-<img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/places/images/Places365_val_00001219.png" width="140"> <img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/places/results/Places365_val_00001219.png" width="140"> 
-<img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/places/images/Places365_val_00015682.png" width="140"> <img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/places/results/Places365_val_00015682.png" width="140"> 
-<img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/places/images/Places365_val_00030416.png" width="140"> <img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/places/results/Places365_val_00030416.png" width="140"> 
-
-<img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/obj_rmv/images/threedogs.png" width="300"> <img src="https://github.com/zengxianyu/crfill/blob/nochange/examples/obj_rmv/results/threedogs.png" width="300"> 
-
 ## Usage
 ### Basic usage
 1. Install dependencies:
