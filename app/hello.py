@@ -28,8 +28,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--port', type=int, default=2334, help='web service port')
 parser.add_argument('--maxsize', type=int, default=2048)
 parser.add_argument('--nogpu', action='store_true')
-parser.add_argument('--opt', default='convnet', type=str)
-parser.add_argument('--load', default='../files/model_256.pth', type=str)
+parser.add_argument('--opt', default='', type=str)
+parser.add_argument('--load', default='', type=str)
+parser.add_argument('--load1', default='../files/model_256.pth', type=str)
+parser.add_argument('--load2', default='../files/model_near512.pth', type=str)
 args = parser.parse_args()
 
 
@@ -39,11 +41,22 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'jpeg', 'bmp'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 max_size = args.maxsize
 use_gpu = not args.nogpu
-
 device = torch.device("cuda:0") if use_gpu else torch.device("cpu")
-net = getattr(networks, args.opt).InpaintGenerator()
-net.load_state_dict(torch.load(args.load))
-net = net.to(device)
+
+if len(args.opt)>0 and len(args.load)>0:
+    net = getattr(networks, args.opt).InpaintGenerator()
+    net.load_state_dict(torch.load(args.load))
+    net = net.to(device)
+    net1 = net
+    net2 = net
+else:
+    net = None
+    net1 = networks.convnet.InpaintGenerator()
+    net1.load_state_dict(torch.load(args.load1))
+    net1 = net1.to(device)
+    net2 = networks.nearestx2.InpaintGenerator()
+    net2.load_state_dict(torch.load(args.load2))
+    net2 = net2.to(device)
 
 
 def allowed_file(filename):
@@ -54,6 +67,11 @@ def process_image(img, msk, name, save_to_input=True):
     img =img.convert("RGB")
     img_raw = np.array(img)
     w_raw, h_raw = img.size
+    if min(w_raw, h_raw)>=512:
+        net = net2
+    else:
+        net = net1
+
     h_t, w_t = h_raw//8*8, w_raw//8*8
 
     img = img.resize((w_t, h_t))
@@ -86,7 +104,7 @@ def process_image(img, msk, name, save_to_input=True):
         result.save(f"static/images/{name}")
 
 @app.route('/', methods=['GET', 'POST'])
-def hello_seq(name=None):
+def hello(name=None):
     if request.method == 'POST':
         if 'file' in request.files:
             file = request.files['file']
