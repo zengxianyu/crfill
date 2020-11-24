@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import pdb
 import numpy as np
 from torch.nn.functional import normalize
-from utils import weight_init, gen_conv, gen_deconv, dis_conv
+from .utils import weight_init, gen_conv, gen_deconv, dis_conv
 
 class InpaintGenerator(nn.Module):
     def __init__(self, cnum=48):
@@ -91,7 +91,8 @@ class InpaintGenerator(nn.Module):
 
         x = x*mask + xin[:, 0:3, :, :]*(1.-mask)
         xnow = x
-        ### atrous conv branch
+
+        ###
         x = self.xconv1(xnow)
         x = self.xconv2_downsample(x)
         x = self.xconv3(x)
@@ -103,7 +104,8 @@ class InpaintGenerator(nn.Module):
         x = self.xconv9_atrous(x)
         x = self.xconv10_atrous(x)
         x_hallu = x
-        ### attention branch
+
+        ###
         x = self.pmconv1(xnow)
         x = self.pmconv2_downsample(x)
         x = self.pmconv3(x)
