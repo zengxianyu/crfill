@@ -50,7 +50,7 @@ python hello.py --nogpu
 After that, open http://localhost:2334 in the browser
 
 ### The adjusted model for high-res inpainitng
-To use the adjusted model for high-res inpainting (specifiy the option ```--nogpu``` to run on cpu```):
+To use the adjusted model for high-res inpainting (specifiy the option ```--nogpu``` to run on cpu):
 ```
 python test.py --opt nearestx2 --load ./files/model_near512.pth \
 --image path/to/images \
