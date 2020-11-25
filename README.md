@@ -1,4 +1,7 @@
 # crfill
+
+[Usage](#basic-usage) | [Web App](#web-app) | | [Paper](tbd) | [Supplementary Material](tbd) | [More results](viscmp.md) |
+
 code for paper ``Image Inpainting with Contextual Reconstruction Loss". This repo (including code and models) are for research purposes only. 
 
 <img src="examples/places/images/Places365_val_00015682.png" width="160"> <img src="examples/places/results/Places365_val_00015682.png" width="160"> <img src="examples/places/images/Places365_val_00001219.png" width="160"> <img src="examples/places/results/Places365_val_00001219.png" width="160"> 
