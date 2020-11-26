@@ -1,6 +1,6 @@
 # crfill
 
-[Usage](#basic-usage) | [Web App](#web-app) | | [Paper](tbd) | [Supplementary Material](tbd) | [More results](viscmp.md) |
+[Usage](#basic-usage) | [Web App](#web-app) | | [Paper](https://arxiv.org/pdf/2011.12836.pdf) | [Supplementary Material](https://maildluteducn-my.sharepoint.com/:b:/g/personal/zengyu_mail_dlut_edu_cn/Eda8Q_v7OSNMj0nr2iG7TmABvxLOtAPwVDdk5mjl7c-IFw?e=Cvki0I) | [More results](viscmp.md) |
 
 code for paper ``Image Inpainting with Contextual Reconstruction Loss". This repo (including code and models) are for research purposes only. 
 
@@ -9,6 +9,12 @@ code for paper ``Image Inpainting with Contextual Reconstruction Loss". This rep
 
 ## Usage
 ### Basic usage
+0. Download code and model
+```
+git clone --single-branch https://github.com/zengxianyu/crfill
+```
+[download model files](https://maildluteducn-my.sharepoint.com/:f:/g/personal/zengyu_mail_dlut_edu_cn/EsCtYO-QzNRKvnpxKq3KeD8B8vCBQXaNEMUEmWlsaLyJSQ?e=9cEfBJ) and put them in the ./files/ directory
+
 1. Install dependencies:
 ```
 conda env create -f environment.yml
