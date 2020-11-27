@@ -4,8 +4,10 @@
 
 code for paper ``Image Inpainting with Contextual Reconstruction Loss". This repo (including code and models) are for research purposes only. 
 
-<img src="examples/places/images/Places365_val_00015682.png" width="160"> <img src="examples/places/results/Places365_val_00015682.png" width="160"> <img src="examples/places/images/Places365_val_00001219.png" width="160"> <img src="examples/places/results/Places365_val_00001219.png" width="160"> 
-<img src="examples/obj_rmv/images/threedogs.png" width="360"> <img src="examples/obj_rmv/results/threedogs.png" width="360"> 
+<img src="https://s3.ax1x.com/2020/11/27/DrVxIO.png" width="160"> <img src="https://s3.ax1x.com/2020/11/27/DrZ9RH.png" width="160"> 
+<img src="https://s3.ax1x.com/2020/11/27/DrZlyn.png" width="160"> <img src="https://s3.ax1x.com/2020/11/27/DrZGwV.png" width="160"> 
+
+<img src="https://s3.ax1x.com/2020/11/27/DrZtFU.png" width="360"> <img src="https://s3.ax1x.com/2020/11/27/DrZdSJ.png" width="360"> 
 
 ## Usage
 ### Basic usage
@@ -41,7 +43,7 @@ Hole masks are grayscale images where pixel values> 0 indicates the pixel at the
 :mega: :mega: The white area of a hole mask should fully cover all pixels in the missing regions. :mega: :mega:
 
 ### Web APP
-<img src="app.png" width=300>
+<img src="https://s3.ax1x.com/2020/11/27/DrVLs1.png" width=300>
 For your convinience of visualization and evaluation, I provide an inpainting APP where you can interact with the inpainting model in a browser, to open a photo and draw area to remove. To use the web app, these additional packages are required: 
 
 ```flask```, ```requests```, ```pillow```
