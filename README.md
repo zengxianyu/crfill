@@ -29,7 +29,6 @@ Hole masks are grayscale images where pixel values> 0 indicates the pixel at the
 :mega: :mega: The white area of a hole mask should fully cover all pixels in the missing regions. :mega: :mega:
 
 ### Web APP
-<img src="https://github.com/zengxianyu/crfill/blob/nochange/app.png" width="300">
 For your convinience of visualization and evaluation, I provide an inpainting APP where you can interact with the inpainting model in a browser, to open a photo and draw area to remove. To use the web app, these additional packages are required: 
 
 ```flask```, ```requests```, ```pillow```
