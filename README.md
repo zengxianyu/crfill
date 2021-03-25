@@ -1,5 +1,4 @@
 # crfill
-code for paper ``Image Inpainting with Contextual Reconstruction Loss"
 
 ## Usage
 ### Basic usage
