@@ -13,7 +13,7 @@ parser.add_argument('--mask', default='./examples/places/masks', type=str)
 parser.add_argument('--output', default='./results', type=str)
 parser.add_argument('--nogpu', action='store_true')
 parser.add_argument('--opt', default='convnet', type=str)
-parser.add_argument('--load', default='./files/model_256.pth', type=str)
+parser.add_argument('--load', default='./files/model_256_objrmv.pth', type=str)
 args = parser.parse_args()
 
 
