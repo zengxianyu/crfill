@@ -70,8 +70,8 @@ PREFIX="--dataset_mode_train trainimage \
 --baseG baseconv \
 --norm_type 1 \
 --netD deepfill \
---load_base_g ./checkpoints/baseconv/latest_net_G.pth \
---load_base_d ./checkpoints/baseconv/latest_net_D.pth \
+--load_base_g ./checkpoints/debug/latest_net_G.pth \
+--load_base_d ./checkpoints/debug/latest_net_D.pth \
 --lambda_ref 1 \
 --lambda_l1 1 \
 --preprocess_mode scale_shortside_and_crop"
