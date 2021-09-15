@@ -226,7 +226,7 @@ def load_network(net, label, epoch, opt):
         if k.startswith("module."):
             k=k.replace("module.","")
         new_dict[k] = v
-    net.load_state_dict(new_dict, strict=False)
+    net.load_state_dict(new_dict)
     return net
 
 

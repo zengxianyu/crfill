@@ -1,4 +1,5 @@
 import numpy as np
+import cv2
 import torch
 import data
 from options.test_options import TestOptions

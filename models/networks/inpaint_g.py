@@ -291,13 +291,13 @@ class BaseConvGenerator(BaseNetwork):
         self.conv7_atrous = gen_conv(2*cnum, 4*cnum, 3, rate=2)
         self.conv8_atrous = gen_conv(2*cnum, 4*cnum, 3, rate=4)
         self.conv9_atrous = gen_conv(2*cnum, 4*cnum, 3, rate=8)
-        self.conv10_atrous = gen_conv(2*cnum, 4*cnum, 3, rate=16) #8
+        self.conv10_atrous = gen_conv(2*cnum, 4*cnum, 3, rate=16)
         self.conv11 = gen_conv(2*cnum, 4*cnum, 3, 1)
-        self.conv12 = gen_conv(2*cnum, 4*cnum, 3, 1) #4
+        self.conv12 = gen_conv(2*cnum, 4*cnum, 3, 1)
         self.conv13_upsample_conv = gen_deconv(2*cnum, 2*cnum)
-        self.conv14 = gen_conv(cnum, 2*cnum, 3, 1) #2
+        self.conv14 = gen_conv(cnum, 2*cnum, 3, 1)
         self.conv15_upsample_conv = gen_deconv(cnum, cnum)
-        self.conv16 = gen_conv(cnum//2, cnum//2, 3, 1) #1
+        self.conv16 = gen_conv(cnum//2, cnum//2, 3, 1)
         self.conv17 = gen_conv(cnum//4, 3, 3, 1, activation=None)
 
         # stage2
@@ -316,7 +316,7 @@ class BaseConvGenerator(BaseNetwork):
         self.pmconv3 = gen_conv(cnum//2, 2*cnum, 3, 1)
         self.pmconv4_downsample = gen_conv(cnum, 4*cnum, 3, 2)
         self.pmconv5 = gen_conv(2*cnum, 4*cnum, 3, 1)
-        self.pmconv6 = gen_conv(2*cnum, 4*cnum, 3, 1,
+        self.pmconv6 = gen_conv(2*cnum, 4*cnum, 3, 1, 
                             activation=nn.ReLU())
         self.pmconv9 = gen_conv(2*cnum, 4*cnum, 3, 1)
         self.pmconv10 = gen_conv(2*cnum, 4*cnum, 3, 1)
@@ -396,28 +396,25 @@ class BaseConvGenerator(BaseNetwork):
         x = self.pmconv4_downsample(x)
         x = self.pmconv5(x)
         x = self.pmconv6(x)
-        pm = x
+        pm_return = x
+
         x = self.pmconv9(x)
         x = self.pmconv10(x)
+        pm = x
         x = torch.cat([x_hallu, pm], 1)
-        feat = x
 
         x = self.allconv11(x)
         x = self.allconv12(x)
         x = self.allconv13_upsample_conv(x)
-        feat_x2 = x
         x = self.allconv14(x)
         x = self.allconv15_upsample_conv(x)
-        feat_x4 = x
         x = self.allconv16(x)
         x = self.allconv17(x)
         x_stage2 = torch.tanh(x)
-        if self.return_feat:
-            return x_stage1, x_stage2, [feat, feat_x2, feat_x4]
-        elif self.return_pm:
-            return x_stage1, x_stage2, pm
-        else:
-            return x_stage1, x_stage2
+        if self.return_pm:
+            return x_stage1, x_stage2, pm_return
+
+        return x_stage1, x_stage2
 
 if __name__ == "__main__":
     pass
