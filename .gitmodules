@@ -1,0 +1,6 @@
+[submodule "models/networks/sync_batchnorm"]
+	path = models/networks/sync_batchnorm
+	url = https://github.com/zengxianyu/sync_batchnorm
+[submodule "logger"]
+	path = logger
+	url = https://github.com/zengxianyu/logger
