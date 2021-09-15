@@ -9,6 +9,91 @@ from models.networks.utils import gen_conv, gen_deconv, dis_conv
 from models.networks.splitcam import ReduceContextAttentionP1, ReduceContextAttentionP2
 from util.util import find_class_in_module
 
+class TwostagendGenerator(BaseNetwork):
+    @staticmethod
+    def modify_commandline_options(parser, is_train):
+        parser.add_argument('--baseG', type=str, default='baseconv',
+                            help="baseg")
+        opt, unknown = parser.parse_known_args()
+        network = find_class_in_module(opt.baseG+"generator",
+                "models.networks.inpaint_g")
+        network.modify_commandline_options(parser, is_train)
+    def get_param_list(self, stage="all"):
+        if stage=="all":
+            list_param = [p for name, p in self.named_parameters()]
+            return list_param
+        else:
+            raise NotImplementedError
+    def __init__(self, opt):
+        super(TwostagendGenerator, self).__init__()
+        network = find_class_in_module(opt.baseG+"generator",
+                "models.networks.inpaint_g")
+        baseg = network(opt, return_pm=True)
+        self.baseg = baseg
+        rate = 1
+        cnum = self.baseg.cnum
+        self.cnum = cnum
+        # similarity encoder
+        self.sconv1 = gen_conv(2*cnum, 4*cnum, 5, 1) # skip cnn out
+        self.sconv2 = gen_conv(2*cnum, 4*cnum, 3, 1, activation=nn.ReLU()) # skip cnn out
+
+        # feature encoder
+        self.bconv1 = gen_conv(3, cnum, 5, 1) # skip cnn out
+        self.bconv2_downsample = gen_conv(int(cnum/2), 2*cnum, 3, 2)
+        self.bconv3 = gen_conv(cnum, 2*cnum, 3, 1) # skip cnn out
+        self.bconv4_downsample = gen_conv(cnum, 4*cnum, 3, 2)
+
+        self.conv13_upsample_conv = gen_deconv(2*cnum, 2*cnum)
+        self.conv14 = gen_conv(cnum*2, 2*cnum, 3, 1) # skip cnn in
+        self.conv15_upsample_conv = gen_deconv(cnum, cnum)
+        self.conv16 = gen_conv(cnum, cnum, 3, 1) # skip cnn in
+
+        self.conv16_2 = gen_conv(cnum//2, cnum, 3, 1) # skip cnn in
+
+        ##cnum//2
+        self.conv17 = gen_conv(cnum//2, 3, 3, 1, activation=None)
+        self.cam_1 = ReduceContextAttentionP1(nn_hard=False, ufstride=2*rate,
+                stride=2*rate, bkg_patch_size=4*rate, pd=0,
+                norm_type=opt.norm_type, is_th=opt.use_th, th=opt.th)
+        self.cam_2 = ReduceContextAttentionP2(ufstride=2*4*rate, bkg_patch_size=16*rate,
+                stride=8*rate, pd=0, mk=False)
+
+    def forward(self, x, mask):
+        # mask_obj: mask of avoid region
+        _,_,hin,win = x.shape
+        x_stage1, x_stage2, pm = self.baseg(x, mask)
+        if not self.training:
+            #print("network not forwarding refine")
+            return x_stage1, x_stage2, x_stage2, {}
+
+        # similarify
+        xnow = x_stage2*mask + x*(1-mask)
+
+        #xs = self.sconv1(pm)
+        #x_similar = self.sconv2(xs)
+        x_similar = pm
+
+        bsize, _, h, w = pm.size()
+        mask_s = F.avg_pool2d(mask, kernel_size=4, stride=4)
+        similar = self.cam_1(x_similar, x_similar, mask_s)
+        # feature
+        xb = self.bconv1(xnow)
+        x_skip1 = xb
+        xb = self.bconv2_downsample(xb)
+        xb = self.bconv3(xb)
+        x_skip2 = xb
+        xb = self.bconv4_downsample(xb)
+        xb = self.conv13_upsample_conv(xb)
+        xb = self.conv14(torch.cat((xb, x_skip2), 1))
+        xb = self.conv15_upsample_conv(xb)
+        xb = self.conv16(torch.cat((xb, x_skip1), 1))
+
+        xb, recon_aux = self.cam_2(similar, xb, mask, {'raw':x})
+        xb = self.conv16_2(xb)
+        xb = self.conv17(xb)
+        xb = torch.tanh(xb)
+        return x_stage1, x_stage2, xb, recon_aux
+
 class DeepFillGenerator(BaseNetwork):
     @staticmethod
     def modify_commandline_options(parser, is_train):

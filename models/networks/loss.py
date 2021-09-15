@@ -6,7 +6,6 @@ Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from models.networks.architecture import VGG19
 
 
 # Defines the GAN loss which uses either LSGAN or the regular GAN.
@@ -104,48 +103,3 @@ class GANLoss(nn.Module):
             return loss / len(input)
         else:
             return self.loss(input, target_is_real, for_discriminator)
-
-
-# Perceptual loss that uses a pretrained VGG network
-class VGGLoss(nn.Module):
-    def __init__(self, gpu_ids):
-        super(VGGLoss, self).__init__()
-        self.vgg = VGG19().cuda()
-        self.criterion = nn.L1Loss()
-        self.weights = [1.0 / 32, 1.0 / 16, 1.0 / 8, 1.0 / 4, 1.0]
-
-    def forward(self, x, y, **kwargs):
-        x_vgg, y_vgg = self.vgg(x), self.vgg(y)
-        loss = 0
-        for i in range(len(x_vgg)):
-            loss += self.weights[i] * self.criterion(x_vgg[i], y_vgg[i].detach())
-        return loss
-
-class MaskedVGGLoss(VGGLoss):
-    def forward(self, x, y, mask, **kwargs):
-        x_vgg, y_vgg = self.vgg(x*mask), self.vgg(y*mask)
-        loss = 0
-        for i in range(len(x_vgg)):
-            loss += self.weights[i] * self.criterion(x_vgg[i], y_vgg[i].detach())
-        return loss
-
-
-class VGGFaceLoss(nn.Module):
-    def __init__(self, gpu_ids, weights_path):
-        super(VGGFaceLoss, self).__init__()
-        self.vgg = VGGFace(weights_path=weights_path).cuda()
-        self.criterion = nn.L1Loss()
-        self.weights = [1.0 / 32, 1.0 / 16, 1.0 / 8, 1.0 / 4, 1.0]
-
-    def forward(self, x, y):
-        x_vgg, y_vgg = self.vgg(x), self.vgg(y)
-        loss = 0
-        for i in range(len(x_vgg)):
-            loss += self.weights[i] * self.criterion(x_vgg[i], y_vgg[i].detach())
-        return loss
-
-
-# KL Divergence loss used in VAE with an image encoder
-class KLDLoss(nn.Module):
-    def forward(self, mu, logvar):
-        return -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())

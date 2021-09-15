@@ -31,7 +31,7 @@ model = trainer.pix2pix_model
 iter_counter = IterationCounter(opt, len(dataloader_train))
 
 # create tool for visualization
-writer = Logger(f"output0/{opt.name}")
+writer = Logger(f"output/{opt.name}")
 
 trainer.save('latest')
 
@@ -118,5 +118,6 @@ for epoch in iter_counter.training_epochs():
                 model.train()
     trainer.update_learning_rate(epoch)
     iter_counter.record_epoch_end()
+    trainer.save('latest')
 
 print('Training was successfully finished.')

@@ -1,12 +1,13 @@
-BSIZE0=48 # stage coarse
-BSIZE=96 # 96:64G
+#BSIZE0=48 # stage coarse
+#BSIZE=96 # 96:64G
+BSIZE0=$((BSIZE/2))
 NWK=16
 PREFIX="--dataset_mode_train trainimage \
 --gpu_ids 0,1 \
 --name debug \
 --dataset_mode_val valimage \
 --train_image_dir ./datasets/places/places2 \
---train_image_list ./datasets/places/places2_standard_challenge.txt \
+--train_image_list ./datasets/places/train_example.txt \
 --path_objectshape_list ./datasets/object_shapes.txt \
 --path_objectshape_base ./datasets/object_masks \
 --val_image_dir ./datasets/places2sample1k_val/places2samples1k_crop256 \
@@ -54,7 +55,7 @@ PREFIX="--dataset_mode_train trainimage \
 --gpu_ids 0,1 \
 --dataset_mode_val valimage \
 --train_image_dir ./datasets/places/places2 \
---train_image_list ./datasets/places/places2_standard_challenge.txt \
+--train_image_list ./datasets/places/train_example.txt \
 --path_objectshape_list ./datasets/object_shapes.txt \
 --path_objectshape_base ./datasets/object_masks \
 --val_image_dir ./datasets/places2sample1k_val/places2samples1k_crop256 \

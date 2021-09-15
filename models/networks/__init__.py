@@ -8,7 +8,6 @@ from models.networks.base_network import BaseNetwork
 from models.networks.loss import *
 from models.networks.discriminator import *
 from models.networks.generator import *
-from models.networks.encoder import *
 import util.util as util
 import pdb
 
@@ -32,9 +31,6 @@ def modify_commandline_options(parser, is_train):
     if is_train:
         netD_cls = find_network_using_name(opt.netD, 'discriminator')
         parser = netD_cls.modify_commandline_options(parser, is_train)
-    netE_cls = find_network_using_name('conv', 'encoder')
-    parser = netE_cls.modify_commandline_options(parser, is_train)
-
     return parser
 
 
@@ -57,9 +53,3 @@ def define_G(opt):
 def define_D(opt):
     netD_cls = find_network_using_name(opt.netD, 'discriminator')
     return create_network(netD_cls, opt)
-
-
-def define_E(opt):
-    # there exists only one encoder type
-    netE_cls = find_network_using_name('conv', 'encoder')
-    return create_network(netE_cls, opt)
