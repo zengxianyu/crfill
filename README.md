@@ -30,7 +30,7 @@ chmod +x download/*
 ```
 conda env create -f environment.yml
 ```
-or manually install these packages in a Python 3.6 enviroment: 
+or install these packages manually in a Python 3.6 enviroment: 
 
 ```pytorch=1.3.1, opencv=3.4.2, tqdm, torchvision, dill, matplotlib, opencv```
 
@@ -41,7 +41,7 @@ or manually install these packages in a Python 3.6 enviroment:
 ./test.sh
 ```
 
-These script will run the inpainting model on the samples I provided. Modify the options in ```test.sh``` to test on custom data
+These script will run the inpainting model on the samples I provided. Modify the options ```--image_dir, --mask_dir, --output_dir``` in ```test.sh``` to test on custom data. 
 
 ### Train
 1. Prepare training datasets and put them in ```./datasets/``` following the example ```./datasets/places```
@@ -66,7 +66,7 @@ To use the web app, these additional packages are required:
 ./demo.sh
 ```
 
-then open http://localhost:2334 in the browser
+then open http://localhost:2334 in the browser to use the web app
 
 ## Citing
 ```
