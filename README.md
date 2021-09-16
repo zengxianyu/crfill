@@ -2,7 +2,7 @@
 
 [Usage](#basic-usage) | [Web App](#web-app) | | [Paper](https://arxiv.org/pdf/2011.12836.pdf) | [Supplementary Material](https://maildluteducn-my.sharepoint.com/:b:/g/personal/zengyu_mail_dlut_edu_cn/Eda8Q_v7OSNMj0nr2iG7TmABvxLOtAPwVDdk5mjl7c-IFw?e=Cvki0I) | [More results](viscmp.md) |
 
-code for paper ``Image Inpainting with Contextual Reconstruction Loss". This repo (including code and models) are for research purposes only. 
+code for paper ``CR-Fill: Generative Image Inpainting with Auxiliary Contextual Reconstruction". This repo (including code and models) are for research purposes only. 
 
 <img src="https://s3.ax1x.com/2020/11/27/DrVxIO.png" width="160"> <img src="https://s3.ax1x.com/2020/11/27/DrZ9RH.png" width="160"> 
 <img src="https://s3.ax1x.com/2020/11/27/DrZlyn.png" width="160"> <img src="https://s3.ax1x.com/2020/11/27/DrZGwV.png" width="160"> 
@@ -67,3 +67,19 @@ To use the web app, these additional packages are required:
 ```
 
 then open http://localhost:2334 in the browser
+
+## Citing
+```
+@inproceedings{zeng2021generative,
+  title={CR-Fill: Generative Image Inpainting with Auxiliary Contextual Reconstruction},
+  author={Zeng, Yu and Lin, Zhe and Lu, Huchuan and Patel, Vishal M.},
+  booktitle={Proceedings of the IEEE International Conference on Computer Vision},
+  year={2021}
+}
+```
+
+## Acknowledgement
+
+* DeepFill https://github.com/jiahuiyu/generative_inpainting
+* Pix2PixHD https://github.com/NVIDIA/pix2pixHD
+* SPADE https://github.com/NVlabs/SPADE
