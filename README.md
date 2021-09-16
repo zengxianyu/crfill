@@ -61,11 +61,10 @@ you may modify the training script to use different settings, e.g., batch size, 
 
 ### Web APP
 <img src="https://s3.ax1x.com/2020/11/27/DrVLs1.png" width=300>
-For your convinience of visualization and evaluation, I provide an inpainting APP where you can interact with the inpainting model in a browser, to open a photo and draw area to remove. To use the web app, these additional packages are required: 
+
+To use the web app, these additional packages are required: 
 
 ```flask```, ```requests```, ```pillow```
-
-Then execute the following:
 
 With GPU:
 ```
