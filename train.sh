@@ -74,7 +74,7 @@ PREFIX="--dataset_mode_train trainimage \
 --netD deepfill \
 --load_base_g ./checkpoints/debug/latest_net_G.pth \
 --load_base_d ./checkpoints/debug/latest_net_D.pth \
---lambda_ref 1 \
+--lambda_ref 0.5 \
 --lambda_l1 1 \
 --preprocess_mode scale_shortside_and_crop"
 python train.py \

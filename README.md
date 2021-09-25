@@ -51,6 +51,10 @@ These script will run the inpainting model on the samples I provided. Modify the
 ./train.sh
 ```
 
+open the html files in ```./output``` to visualize training
+
+After the training is finished, the model files can be found in ```./checkpoints/debugarr0```
+
 you may modify the training script to use different settings, e.g., batch size, hyperparameters
 
 
