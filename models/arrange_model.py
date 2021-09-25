@@ -71,7 +71,7 @@ class ArrangeModel(InpaintModel):
                 coarse_image, fake_image, aux_image, recon_aux = self.generate_fake(
                         inputs, real_image, mask)
                 composed_aux = aux_image*mask + inputs*(1-mask)
-            return composed_aux
+            return composed_aux, inputs
         else:
             raise ValueError("|mode| is invalid")
 
