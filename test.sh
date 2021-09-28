@@ -9,3 +9,5 @@ python test.py \
 	--model inpaint \
 	--netG baseconv \
         --which_epoch latest \
+	--load_baseg \
+	$EXTRA

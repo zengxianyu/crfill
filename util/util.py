@@ -219,6 +219,14 @@ def load_network(net, label, epoch, opt):
     save_dir = os.path.join(opt.checkpoints_dir, opt.name)
     save_path = os.path.join(save_dir, save_filename)
     weights = torch.load(save_path)
+    if opt.load_baseg:
+        _weights = {}
+        for k,v in weights.items():
+            if k.startswith("baseg"):
+                _k = k.replace("baseg.","")
+                _weights[_k] = v
+        for k,v in _weights.items():
+            weights[k] = v
     print("==============load path: =================")
     print(save_path)
     new_dict = {}
@@ -226,7 +234,7 @@ def load_network(net, label, epoch, opt):
         if k.startswith("module."):
             k=k.replace("module.","")
         new_dict[k] = v
-    net.load_state_dict(new_dict)
+    net.load_state_dict(new_dict, strict=False)
     return net
 
 
