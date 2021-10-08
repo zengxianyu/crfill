@@ -57,6 +57,18 @@ After the training is finished, the model files can be found in ```./checkpoints
 
 you may modify the training script to use different settings, e.g., batch size, hyperparameters
 
+### Finetune
+For finetune on custom dataset based on my pretrained models, use the following command:
+1. download checkpoints
+```
+./download/download_pretrain.sh
+```
+2. run the training script
+```
+./finetune.sh
+```
+you may change the options in ```finetune.sh``` to use different hyperparameters or your own dataset
+
 
 ### Web APP
 <img src="https://s3.ax1x.com/2020/11/27/DrVLs1.png" width=300>
