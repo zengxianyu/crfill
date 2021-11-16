@@ -1,0 +1,63 @@
+<!doctype html>
+<title>{{title_name}}</title>
+
+<h1>plot</h1>
+<!--
+<table style="width:100%">
+    <tr>
+		{% for pf in plotfiles %}
+		<td>
+            {{pf}}
+		</td>
+		{% endfor %}
+    </tr>
+	<tr>
+		{% for pf in plotfiles %}
+		<td>
+		<img src="{{pf}}" alt="{{pf}}">
+		</td>
+		{% endfor %}
+	</tr>
+</table>
+-->
+{% for pf in plotfiles %}
+{{pf}}
+<img src="{{pf}}" alt="{{pf}}">
+{% endfor %}
+{% if image_tick_path %}
+<h1>image</h1>
+<label id="label">test</label>
+<input type="range" id="myRange" value="{{image_tick_path[0]['tick']|length-1}}" min="{{0}}" max="{{image_tick_path[0]['tick']|length-1}}" step="1">
+<br>
+{% for dict_tp in image_tick_path %}
+<h2>{{dict_tp["path"]}}</h2>
+<img src="" id="image_{{loop.index}}">
+<br>
+{% endfor %}
+<script>
+var list = [
+    {% for tk in image_tick_path[0]['tick'] %}
+    {{tk}}, 
+    {% endfor %}
+];
+var slider = document.getElementById("myRange");
+var label = document.getElementById("label");
+var imgprefix = list[slider.value];
+label.innerHTML = imgprefix;
+{% for dict_tp in image_tick_path %}
+var image_path = "{{dict_tp["path"]}}";
+var image_{{loop.index}} = document.getElementById("image_{{loop.index}}");
+image_{{loop.index}}.setAttribute("src", `${image_path}/${imgprefix}.png`);
+{% endfor %}
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    var imgprefix = list[this.value];
+    label.innerHTML = imgprefix;
+    {% for dict_tp in image_tick_path %}
+    var image_path = "{{dict_tp["path"]}}";
+    image_{{loop.index}}.setAttribute("src", `${image_path}/${imgprefix}.png`);
+    {% endfor %}
+}
+</script>
+{% endif %}

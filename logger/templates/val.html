@@ -1,0 +1,65 @@
+<!doctype html>
+<title>results</title>
+
+<h1>image</h1>
+<table cellpadding="0"  cellpadding="0">
+<tr>
+<td>
+{% for exp_tick in list_exp_ticks %}
+    <label>{{list_exp_paths[loop.index0]}}</label>
+{% endfor %}
+</td>
+</tr>
+
+<tr>
+<td>
+{% for exp_tick in list_exp_ticks %}
+	<label id="label_{{loop.index}}">test</label>
+	<input type="range" id="myRange_{{loop.index}}" value="{{exp_tick|length-1}}" min="{{0}}" max="{{exp_tick|length-1}}" step="1">
+{% endfor %}
+</td>
+</tr>
+
+{% for img_name in list_img_names %}
+<tr>
+<td>
+{% for exp_tick in list_exp_ticks %}
+<img src="" id="image_{{loop.index}}_{{img_name}}">
+{% endfor %}
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<script>
+{% for exp_tick in list_exp_ticks %}
+{% set outer_loop = loop %}
+var list_{{loop.index}} = [
+    {% for tk in exp_tick %}
+    "{{tk}}", 
+    {% endfor %}
+];
+var slider_{{loop.index}} = document.getElementById("myRange_{{loop.index}}");
+var label_{{loop.index}} = document.getElementById("label_{{loop.index}}");
+var imgprefix_{{loop.index}} = list_{{loop.index}}[slider_{{loop.index}}.value];
+
+{% for img_name in list_img_names %}
+var imgprefix = list_{{outer_loop.index}}[slider_{{outer_loop.index}}.value];
+label_{{outer_loop.index}}.innerHTML = imgprefix;
+var pathprefix = `{{list_exp_paths[outer_loop.index0]}}/${imgprefix}`;
+var image_{{outer_loop.index}}_{{loop.index}} = document.getElementById("image_{{outer_loop.index}}_{{img_name}}");
+image_{{outer_loop.index}}_{{loop.index}}.setAttribute("src", `${pathprefix}/{{img_name}}`);
+{% endfor %}
+
+label_{{loop.index}}.innerHTML = imgprefix_{{loop.index}};
+slider_{{loop.index}}.oninput = function() {
+    var imgprefix = list_{{loop.index}}[this.value];
+    label_{{loop.index}}.innerHTML = imgprefix;
+    var pathprefix = `{{list_exp_paths[loop.index0]}}/${imgprefix}`;
+    {% for img_name in list_img_names %}
+    var image_{{outer_loop.index}}_{{loop.index}} = document.getElementById("image_{{outer_loop.index}}_{{img_name}}");
+    image_{{outer_loop.index}}_{{loop.index}}.setAttribute("src", `${pathprefix}/{{img_name}}`);
+    {% endfor %}
+}
+{% endfor %}
+</script>
