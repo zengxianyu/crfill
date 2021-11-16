@@ -23,7 +23,7 @@ git submodule update
 ```
 chmod +x download/*
 ./download/download_model.sh
-./download/download_datal.sh
+./download/download_data.sh
 ```
 
 1. Install dependencies:
